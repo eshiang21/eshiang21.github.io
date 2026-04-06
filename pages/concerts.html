@@ -24,8 +24,16 @@
 
     <section class="section">
       <div class="section-label">
-        <span>All shows</span>
+        <span id="section-title">All shows</span>
         <span class="section-count" id="count"></span>
+      </div>
+      <div class="filter-bar" id="filter-bar">
+        <select class="filter-select" id="filter-artist"><option value="">All Artists</option></select>
+        <select class="filter-select" id="filter-year"><option value="">All Years</option></select>
+        <select class="filter-select" id="filter-venue"><option value="">All Venues</option></select>
+        <select class="filter-select" id="filter-city"><option value="">All Cities</option></select>
+        <select class="filter-select" id="filter-category"><option value="">All Categories</option></select>
+        <button class="filter-clear" id="filter-clear">Clear filters</button>
       </div>
       <div class="video-grid" id="concert-grid"></div>
     </section>
@@ -105,34 +113,95 @@
     const parseDate = d => new Date(d.replace(/\s&\s\d+/, ''));
     concerts.sort((a, b) => parseDate(b.date) - parseDate(a.date));
 
-    document.getElementById('count').textContent = concerts.length + ' videos';
+    // ── FILTERS ──
+    const filterFields = ['artist', 'year', 'venue', 'city', 'category'];
+    const activeFilters = {};
 
-    const grid = document.getElementById('concert-grid');
-    let currentYear = null;
-    concerts.forEach((c, i) => {
-      const year = parseDate(c.date).getFullYear();
-      if (year !== currentYear) {
-        grid.insertAdjacentHTML('beforeend', `<div class="year-divider"><span>${year}</span></div>`);
-        currentYear = year;
+    function getUnique(field) {
+      if (field === 'year') {
+        return [...new Set(concerts.map(c => parseDate(c.date).getFullYear()))].sort((a, b) => b - a);
       }
-      grid.insertAdjacentHTML('beforeend', `
-        <article class="video-card" data-index="${i}">
-          <div class="card-thumb">
-            <img src="${c.image}" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/${c.youtubeId}/hqdefault.jpg'" alt="${esc(c.title)}" loading="lazy" />
-            <a class="card-yt-link" href="https://www.youtube.com/watch?v=${c.youtubeId}" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube" title="Watch on YouTube">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8zM9.75 15.5V8.5l6.25 3.5-6.25 3.5z"/></svg>
-            </a>
-            <div class="card-date">${c.date.replace(/,?\s\d{4}$/, '').toUpperCase()}</div>
-            <div class="card-overlay">
-              <p class="card-artist">${esc(c.artist)}</p>
-              <p class="card-title">${esc(c.title)}</p>
-            </div>
-          </div>
-        </article>
-      `);
+      return [...new Set(concerts.map(c => c[field]))].sort();
+    }
+
+    filterFields.forEach(field => {
+      const sel = document.getElementById(`filter-${field}`);
+      getUnique(field).forEach(val => {
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.textContent = val;
+        sel.appendChild(opt);
+      });
+      sel.addEventListener('change', () => {
+        activeFilters[field] = sel.value;
+        updateFilters();
+      });
     });
 
-    grid.addEventListener('click', e => {
+    document.getElementById('filter-clear').addEventListener('click', () => {
+      filterFields.forEach(field => {
+        activeFilters[field] = '';
+        document.getElementById(`filter-${field}`).value = '';
+      });
+      updateFilters();
+    });
+
+    function getFiltered() {
+      return concerts.filter(c => {
+        const year = parseDate(c.date).getFullYear();
+        return (!activeFilters.artist   || c.artist   === activeFilters.artist) &&
+               (!activeFilters.year     || year == activeFilters.year) &&
+               (!activeFilters.venue    || c.venue    === activeFilters.venue) &&
+               (!activeFilters.city     || c.city     === activeFilters.city) &&
+               (!activeFilters.category || c.category === activeFilters.category);
+      });
+    }
+
+    function renderGrid(filtered) {
+      const grid = document.getElementById('concert-grid');
+      grid.innerHTML = '';
+      let currentYear = null;
+      filtered.forEach(c => {
+        const i = concerts.indexOf(c);
+        const year = parseDate(c.date).getFullYear();
+        if (year !== currentYear) {
+          grid.insertAdjacentHTML('beforeend', `<div class="year-divider"><span>${year}</span></div>`);
+          currentYear = year;
+        }
+        grid.insertAdjacentHTML('beforeend', `
+          <article class="video-card" data-index="${i}">
+            <div class="card-thumb">
+              <img src="${c.image}" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/${c.youtubeId}/hqdefault.jpg'" alt="${esc(c.title)}" loading="lazy" />
+              <a class="card-yt-link" href="https://www.youtube.com/watch?v=${c.youtubeId}" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube" title="Watch on YouTube">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8zM9.75 15.5V8.5l6.25 3.5-6.25 3.5z"/></svg>
+              </a>
+              <div class="card-date">${c.date.replace(/,?\s\d{4}$/, '').toUpperCase()}</div>
+              <div class="card-overlay">
+                <p class="card-artist">${esc(c.artist)}</p>
+                <p class="card-title">${esc(c.title)}</p>
+              </div>
+            </div>
+          </article>
+        `);
+      });
+      const hasActive = filterFields.some(f => activeFilters[f]);
+      document.getElementById('count').textContent = hasActive
+        ? `${filtered.length} of ${concerts.length} videos`
+        : `${concerts.length} videos`;
+    }
+
+    function updateFilters() {
+      const hasActive = filterFields.some(f => activeFilters[f]);
+      document.getElementById('filter-clear').classList.toggle('visible', hasActive);
+      filterFields.forEach(field => {
+        document.getElementById(`filter-${field}`).classList.toggle('active', !!activeFilters[field]);
+      });
+      renderGrid(getFiltered());
+    }
+
+    renderGrid(concerts);
+
+    document.getElementById('concert-grid').addEventListener('click', e => {
       if (e.target.closest('.card-yt-link')) return;
       const card = e.target.closest('.video-card');
       if (!card) return;
