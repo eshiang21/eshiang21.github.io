@@ -227,6 +227,41 @@ main { padding-top: var(--nav-h); }
   background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.1) 55%);
 }
 
+.card-yt-link {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease), background 0.2s var(--ease);
+  z-index: 2;
+  text-decoration: none;
+}
+
+.video-card:hover .card-yt-link {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.card-yt-link:hover {
+  background: #ff0000;
+}
+
+.card-yt-link svg {
+  width: 1rem;
+  height: 1rem;
+  fill: #fff;
+  flex-shrink: 0;
+}
+
 .card-artist {
   font-size: 0.72rem;
   font-weight: 500;
