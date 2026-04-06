@@ -44,12 +44,22 @@
         <p class="modal-artist-name" id="modal-artist"></p>
         <p class="modal-venue-name" id="modal-venue"></p>
         <p class="modal-date-text" id="modal-date"></p>
+        <div class="modal-divider"></div>
         <div class="modal-meta">
           <span id="modal-category"></span>
           <span class="byline-dot">•</span>
           <span id="modal-purchase-method"></span>
           <span class="byline-dot">•</span>
           <span id="modal-purchase-timing"></span>
+        </div>
+        <div class="modal-divider"></div>
+        <div class="modal-extras">
+          <p class="modal-extra-label">Thoughts</p>
+          <p class="modal-extra-value" id="modal-thoughts"></p>
+          <p class="modal-extra-label">Favorite Song</p>
+          <p class="modal-extra-value" id="modal-favorite-song"></p>
+          <p class="modal-extra-label">Fun Fact</p>
+          <p class="modal-extra-value" id="modal-fun-fact"></p>
         </div>
       </div>
     </div>
@@ -65,12 +75,12 @@
     document.getElementById('year').textContent = '© ' + new Date().getFullYear();
 
     const concerts = [
-      { title: "Dancing With The Stars: Live! — 2026 Tour", youtubeId: "S0O4gO7IXL0", image: "/images/concerts/dancing_with_the_stars_live_2026_tour.png", artist: "Dancing with the Stars", venue: "Radio City Music Hall", city: "New York, NY", date: "Feb 15, 2026", purchaseMethod: "Box Office", purchaseTiming: "Day Of", category: "Dance" },
-      { title: "That's Showbiz Baby! The Tour", youtubeId: "1kIIdGV1ubA", image: "/images/concerts/thats_showbiz_baby_the_tour.png", artist: "Jade", venue: "The Fillmore", city: "Philadelphia, PA", date: "Feb 16, 2026", purchaseMethod: "Resale", purchaseTiming: "Planned", category: "Pop" },
-      { title: "[This Is For] World Tour", youtubeId: "xeeiFQuzFss", image: "/images/concerts/this_is_for_world_tour.png", artist: "Twice", venue: "UBS Arena", city: "New York, NY", date: "Feb 20, 2026", purchaseMethod: "Resale", purchaseTiming: "Day Of", category: "K-Pop" },
-      { title: "Wishbone World Tour", youtubeId: "4-VDulM2GVs", image: "/images/concerts/wishbone_world_tour.png", artist: "Conan Gray", venue: "Prudential Center", city: "Newark, NJ", date: "Feb 27, 2026", purchaseMethod: "Ticketmaster", purchaseTiming: "Week Of", category: "Pop" },
-      { title: "The MAYHEM Ball", youtubeId: "XMfMK5laeNA", image: "/images/concerts/the_mayhem_ball.png", artist: "Lady Gaga", venue: "Madison Square Garden", city: "New York, NY", date: "Mar 18, 2026", purchaseMethod: "Ticketmaster", purchaseTiming: "Day Of", category: "Pop" },
-      { title: "Little Miss Drama Tour", youtubeId: "pfMTQIaVPz0", image: "/images/concerts/little_miss_drama_tour.png", artist: "Cardi B", venue: "Madison Square Garden", city: "New York, NY", date: "Mar 26, 2026", purchaseMethod: "Box Office", purchaseTiming: "Week Of", category: "Rap" },
+      { title: "Dancing With The Stars: Live! — 2026 Tour", youtubeId: "S0O4gO7IXL0", image: "/images/concerts/dancing_with_the_stars_live_2026_tour.png", artist: "Dancing with the Stars", venue: "Radio City Music Hall", city: "New York, NY", date: "Feb 15, 2026", purchaseMethod: "Ticketmaster", purchaseTiming: "Day Of", category: "Dance", thoughts: "Val was a standout.", favoriteSong: "WHERE IS MY HUSBAND!", funFact: "Big recent demographic shift to young Caucasian females (def from TikTok)." },
+      { title: "That's Showbiz Baby! The Tour", youtubeId: "1kIIdGV1ubA", image: "/images/concerts/thats_showbiz_baby_the_tour.png", artist: "Jade", venue: "The Fillmore", city: "Philadelphia, PA", date: "Feb 16, 2026", purchaseMethod: "Resale", purchaseTiming: "Planned", category: "Pop", thoughts: "Intimate venue (but low budget). Hoping she gets a breakout hit soon, so underrated!", favoriteSong: "Plastic Box", funFact: "Same day trip from NYC (Amtrak in morning, chilled at Wharton, late evening Peter Pan bus back)." },
+      { title: "[This Is For] World Tour", youtubeId: "xeeiFQuzFss", image: "/images/concerts/this_is_for_world_tour.png", artist: "Twice", venue: "UBS Arena", city: "New York, NY", date: "Feb 20, 2026", purchaseMethod: "Resale", purchaseTiming: "Day Of", category: "K-Pop", thoughts: "Nayeon seemed sad, but Jihyo killed it!", favoriteSong: "The Feels", funFact: "Setlist has become my workout playlist for several months." },
+      { title: "Wishbone World Tour", youtubeId: "4-VDulM2GVs", image: "/images/concerts/wishbone_world_tour.png", artist: "Conan Gray", venue: "Prudential Center", city: "Newark, NJ", date: "Feb 27, 2026", purchaseMethod: "Ticketmaster", purchaseTiming: "Week Of", category: "Pop", thoughts: "Loved the sailor theme throughout.", favoriteSong: "Wish You Were Sober", funFact: "Our row was released during random afternoon drop - bots got every seat except ours." },
+      { title: "The MAYHEM Ball", youtubeId: "XMfMK5laeNA", image: "/images/concerts/the_mayhem_ball.png", artist: "Lady Gaga", venue: "Madison Square Garden", city: "New York, NY", date: "Mar 18, 2026", purchaseMethod: "Ticketmaster", purchaseTiming: "Day Of", category: "Pop", thoughts: "What an insane catalog of hits.", favoriteSong: "The Edge of Glory", funFact: "When Gaga was at the B-stage, folks nearby left their seats to be closer - I got to move around." },
+      { title: "Little Miss Drama Tour", youtubeId: "pfMTQIaVPz0", image: "/images/concerts/little_miss_drama_tour.png", artist: "Cardi B", venue: "Madison Square Garden", city: "New York, NY", date: "Mar 26, 2026", purchaseMethod: "Box Office", purchaseTiming: "Week Of", category: "Rap", thoughts: "Gives everything into performance.", favoriteSong: "Be Careful", funFact: "The row we found was pretty empty the entire time." },
     ];
 
     document.getElementById('count').textContent = concerts.length + ' videos';
@@ -84,6 +94,7 @@
             <a class="card-yt-link" href="https://www.youtube.com/watch?v=${c.youtubeId}" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube" title="Watch on YouTube">
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8zM9.75 15.5V8.5l6.25 3.5-6.25 3.5z"/></svg>
             </a>
+            <div class="card-date">${c.date.replace(/,?\s\d{4}$/, '').toUpperCase()}</div>
             <div class="card-overlay">
               <p class="card-artist">${c.artist}</p>
               <p class="card-title">${c.title}</p>
@@ -107,6 +118,9 @@
       document.getElementById('modal-category').textContent = c.category;
       document.getElementById('modal-purchase-method').textContent = c.purchaseMethod;
       document.getElementById('modal-purchase-timing').textContent = c.purchaseTiming;
+      document.getElementById('modal-thoughts').textContent = c.thoughts;
+      document.getElementById('modal-favorite-song').textContent = c.favoriteSong;
+      document.getElementById('modal-fun-fact').textContent = c.funFact;
       document.getElementById('modal-backdrop').classList.add('open');
       document.body.style.overflow = 'hidden';
     });
