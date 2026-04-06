@@ -31,6 +31,28 @@
     </section>
   </main>
 
+  <div class="modal-backdrop" id="modal-backdrop">
+    <div class="modal-card">
+      <button class="modal-close" id="modal-close" aria-label="Close">&#x2715;</button>
+      <div class="modal-video">
+        <iframe id="modal-iframe" title="Concert video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+      <div class="modal-info">
+        <p class="modal-title" id="modal-title"></p>
+        <div class="modal-meta">
+          <span id="modal-artist"></span>
+          <span class="byline-dot">•</span>
+          <span id="modal-venue"></span>
+          <span class="byline-dot">•</span>
+          <span id="modal-date"></span>
+          <span class="price-tag" id="modal-price"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <span>Eddie</span>
     <span id="year"></span>
@@ -52,26 +74,47 @@
     document.getElementById('count').textContent = concerts.length + ' videos';
 
     const grid = document.getElementById('concert-grid');
-    concerts.forEach(c => {
+    concerts.forEach((c, i) => {
       grid.insertAdjacentHTML('beforeend', `
-        <article class="video-card">
-          <div class="video-embed">
-            <iframe src="https://www.youtube.com/embed/${c.youtubeId}" title="${c.title}"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          <div class="video-info">
-            <p class="title">${c.title}</p>
-            <div class="byline">
-              <span>${c.artist}</span>
-              <span class="byline-dot">•</span>
-              <span>${c.venue}, ${c.city}</span>
-              <span class="byline-dot">•</span>
-              <span>${c.date}</span>
-              <span class="price-tag">${c.price}</span>
+        <article class="video-card" data-index="${i}">
+          <div class="card-thumb">
+            <img src="https://img.youtube.com/vi/${c.youtubeId}/hqdefault.jpg" alt="${c.title}" loading="lazy" />
+            <div class="card-overlay">
+              <p class="card-artist">${c.artist}</p>
+              <p class="card-title">${c.title}</p>
             </div>
           </div>
         </article>
       `);
+    });
+
+    grid.addEventListener('click', e => {
+      const card = e.target.closest('.video-card');
+      if (!card) return;
+      const c = concerts[card.dataset.index];
+      document.getElementById('modal-iframe').src =
+        `https://www.youtube.com/embed/${c.youtubeId}?autoplay=1`;
+      document.getElementById('modal-title').textContent = c.title;
+      document.getElementById('modal-artist').textContent = c.artist;
+      document.getElementById('modal-venue').textContent = `${c.venue}, ${c.city}`;
+      document.getElementById('modal-date').textContent = c.date;
+      document.getElementById('modal-price').textContent = c.price;
+      document.getElementById('modal-backdrop').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+
+    function closeModal() {
+      document.getElementById('modal-backdrop').classList.remove('open');
+      document.getElementById('modal-iframe').src = '';
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    document.getElementById('modal-backdrop').addEventListener('click', e => {
+      if (e.target === e.currentTarget) closeModal();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
     });
   </script>
 </body>
