@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Other — Eddie</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" href="../index.html">Eddie</a>
+    <ul class="nav-links">
+      <li><a href="concerts.html">Concerts</a></li>
+      <li><a href="travel.html">Travel</a></li>
+      <li><a href="other.html">Other</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <header class="page-header">
+      <h1>Other</h1>
+      <p>Everything else worth remembering.</p>
+    </header>
+
+    <section class="section">
+      <div class="section-label">
+        <span>Miscellaneous</span>
+        <span class="section-count" id="count"></span>
+      </div>
+      <div class="video-grid" id="other-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Eddie</span>
+    <span id="year"></span>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    document.getElementById('year').textContent = '© ' + new Date().getFullYear();
+
+    // Add your other videos here ↓
+    const others = [
+      { title: "Video Title Here", youtubeId: "YOUR_VIDEO_ID", category: "Category", date: "2025", notes: "" },
+    ];
+
+    document.getElementById('count').textContent = others.length + ' videos';
+
+    const grid = document.getElementById('other-grid');
+    others.forEach(o => {
+      grid.insertAdjacentHTML('beforeend', `
+        <article class="video-card">
+          <div class="video-embed">
+            <iframe src="https://www.youtube.com/embed/${o.youtubeId}" title="${o.title}"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <p class="title">${o.title}</p>
+            <div class="byline">
+              <span>${o.category}</span>
+              <span class="byline-dot">•</span>
+              <span>${o.date}</span>
+            </div>
+            ${o.notes ? `<p style="font-size:0.78rem;color:var(--gray2);margin-top:0.3rem;">${o.notes}</p>` : ''}
+          </div>
+        </article>
+      `);
+    });
+  </script>
+</body>
+</html>
