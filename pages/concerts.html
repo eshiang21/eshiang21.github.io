@@ -79,6 +79,9 @@
         <article class="video-card" data-index="${i}">
           <div class="card-thumb">
             <img src="https://img.youtube.com/vi/${c.youtubeId}/hqdefault.jpg" alt="${c.title}" loading="lazy" />
+            <a class="card-yt-link" href="https://www.youtube.com/watch?v=${c.youtubeId}" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube" title="Watch on YouTube">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8zM9.75 15.5V8.5l6.25 3.5-6.25 3.5z"/></svg>
+            </a>
             <div class="card-overlay">
               <p class="card-artist">${c.artist}</p>
               <p class="card-title">${c.title}</p>
@@ -89,6 +92,7 @@
     });
 
     grid.addEventListener('click', e => {
+      if (e.target.closest('.card-yt-link')) return;
       const card = e.target.closest('.video-card');
       if (!card) return;
       const c = concerts[card.dataset.index];
