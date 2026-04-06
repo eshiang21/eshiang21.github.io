@@ -368,6 +368,26 @@ main { padding-top: var(--nav-h); }
   margin-bottom: 0.5rem;
 }
 
+.modal-artist-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--black);
+  margin: 0 0 0.2rem;
+}
+
+.modal-venue-name {
+  font-size: 0.82rem;
+  color: var(--gray2);
+  margin: 0 0 0.2rem;
+}
+
+.modal-date-text {
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--gray2);
+  margin: 0 0 0.6rem;
+}
+
 .modal-meta {
   font-size: 0.78rem;
   color: var(--gray2);
