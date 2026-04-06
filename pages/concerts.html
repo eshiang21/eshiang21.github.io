@@ -75,6 +75,23 @@
     document.getElementById('year').textContent = '© ' + new Date().getFullYear();
 
     const concerts = [
+      { title: "The Secret of Us Tour", youtubeId: "Ch-Tl-HkV3s", image: "https://img.youtube.com/vi/Ch-Tl-HkV3s/hqdefault.jpg", artist: "Gracie Abrams", venue: "Myunghwa Live Hall", city: "Seoul, South Korea", date: "Apr 6, 2025", purchaseMethod: "Resale", purchaseTiming: "Day Of", category: "Pop", thoughts: "", favoriteSong: "", funFact: "" },
+      { title: "Cowboy Carter Tour", youtubeId: "PUuhyTa7G_Q", image: "https://img.youtube.com/vi/PUuhyTa7G_Q/hqdefault.jpg", artist: "Beyoncé", venue: "MetLife Stadium", city: "East Rutherford, NJ", date: "May 24 & 25, 2025", purchaseMethod: "Resale", purchaseTiming: "Day Of", category: "R&B", thoughts: "", favoriteSong: "", funFact: "" },
+      { title: "WORLD TOUR <DEADLINE> IN LOS ANGELES", youtubeId: "bTKoahI3NmA", image: "https://img.youtube.com/vi/bTKoahI3NmA/hqdefault.jpg", artist: "Blackpink", venue: "SoFi Stadium", city: "Inglewood, CA", date: "Jul 12, 2025", purchaseMethod: "Ticketmaster", purchaseTiming: "Planned", category: "K-Pop", thoughts: "", favoriteSong: "", funFact: "" },
+      { title: "WORLD TOUR <DEADLINE> IN NEW YORK", youtubeId: "AQI3vq7gAjY", image: "https://img.youtube.com/vi/AQI3vq7gAjY/hqdefault.jpg", artist: "Blackpink", venue: "Citi Field", city: "Queens, NY", date: "Jul 26, 2025", purchaseMethod: "Ticketmaster", purchaseTiming: "Planned", category: "K-Pop", thoughts: "", favoriteSong: "", funFact: "" },
+      { title: "JONAS20: Greetings From Your Hometown Tour", youtubeId: "Re3l6wVtde4", image: "https://img.youtube.com/vi/Re3l6wVtde4/hqdefault.jpg", artist: "Jonas Brothers", venue: "MetLife Stadium", city: "East Rutherford, NJ", date: "Aug 10, 2025", purchaseMethod: "Resale", purchaseTiming: "Day Of", category: "Pop", thoughts: "", favoriteSong: "", funFact: "" },
+      { title: "Miss Possessive Tour", youtubeId: "tdrEVDqUG5Y", image: "https://img.youtube.com/vi/tdrEVDqUG5Y/hqdefault.jpg", artist: "Tate McRae", venue: "Madison Square Garden", city: "New York, NY", date: "Sep 4, 2025", purchaseMethod: "Ticketmaster", purchaseTiming: "Week Of", category: "Pop", thoughts: "", favoriteSong: "", funFact: "" },
+      { title: "Radical Optimism Tour", youtubeId: "o6npG8vYXHc", image: "https://img.youtube.com/vi/o6npG8vYXHc/hqdefault.jpg", artist: "Dua Lipa", venue: "Madison Square Garden", city: "New York, NY", date: "Sep 17, 2025", purchaseMethod: "Ticketmaster", purchaseTiming: "Day Of", category: "Pop", thoughts: "", favoriteSong: "", funFact: "" },
+      { title: "Visions of Damsels & Other Dangerous Things", youtubeId: "7SoLxcaPmlo", image: "https://img.youtube.com/vi/7SoLxcaPmlo/hqdefault.jpg", artist: "Chappell Roan", venue: "Forest Hills Stadium", city: "Queens, NY", date: "Sep 20, 2025", purchaseMethod: "Resale", purchaseTiming: "Week Of", category: "Pop", thoughts: "", favoriteSong: "", funFact: "" },
+      { title: "Whatever's Clever Residency", youtubeId: "FbOL4zL6-B4", image: "https://img.youtube.com/vi/FbOL4zL6-B4/hqdefault.jpg", artist: "Charlie Puth", venue: "Blue Note", city: "New York, NY", date: "Sep 26, 2025", purchaseMethod: "TicketWeb", purchaseTiming: "Planned", category: "Rock", thoughts: "", favoriteSong: "", funFact: "" },
+      { title: "Global Citizen Festival", youtubeId: "ucb3ozUYa-8", image: "https://img.youtube.com/vi/ucb3ozUYa-8/hqdefault.jpg", artist: "Global Citizen", venue: "Central Park", city: "New York, NY", date: "Sep 27, 2025", purchaseMethod: "Ticketmaster", purchaseTiming: "Planned", category: "Festival", thoughts: "", favoriteSong: "", funFact: "" },
+      { title: "The Ultrasound World Tour", youtubeId: "4xYHQPBHu3E", image: "https://img.youtube.com/vi/4xYHQPBHu3E/hqdefault.jpg", artist: "Lorde", venue: "Madison Square Garden", city: "New York, NY", date: "Oct 1, 2025", purchaseMethod: "Box Office", purchaseTiming: "Week Of", category: "Rock", thoughts: "", favoriteSong: "", funFact: "" },
+      { title: "A Matter of Time Tour", youtubeId: "dIEeEjkm1i8", image: "https://img.youtube.com/vi/dIEeEjkm1i8/hqdefault.jpg", artist: "Laufey", venue: "Madison Square Garden", city: "New York, NY", date: "Oct 15 & 16, 2025", purchaseMethod: "Ticketmaster", purchaseTiming: "Planned", category: "Jazz", thoughts: "", favoriteSong: "", funFact: "" },
+      { title: "Short n' Sweet Tour", youtubeId: "_ejpKBXF-dw", image: "https://img.youtube.com/vi/_ejpKBXF-dw/hqdefault.jpg", artist: "Sabrina Carpenter", venue: "Madison Square Garden", city: "New York, NY", date: "Oct 28, 2025", purchaseMethod: "Ticketmaster", purchaseTiming: "Planned", category: "Pop", thoughts: "", favoriteSong: "", funFact: "" },
+      { title: "Short n' Spooky", youtubeId: "Na8cvgOjB94", image: "https://img.youtube.com/vi/Na8cvgOjB94/hqdefault.jpg", artist: "Sabrina Carpenter", venue: "Madison Square Garden", city: "New York, NY", date: "Oct 31, 2025", purchaseMethod: "Ticketmaster", purchaseTiming: "Planned", category: "Pop", thoughts: "", favoriteSong: "", funFact: "" },
+      { title: "LOVE IS LIKE Tour", youtubeId: "WD95s5VKwd8", image: "https://img.youtube.com/vi/WD95s5VKwd8/hqdefault.jpg", artist: "Maroon 5", venue: "Madison Square Garden", city: "New York, NY", date: "Nov 19, 2025", purchaseMethod: "Box Office", purchaseTiming: "Day Of", category: "Pop", thoughts: "", favoriteSong: "", funFact: "" },
+      { title: "Z100's Jingle Ball", youtubeId: "2KwOZPcjLxw", image: "https://img.youtube.com/vi/2KwOZPcjLxw/hqdefault.jpg", artist: "Jingle Ball", venue: "Madison Square Garden", city: "New York, NY", date: "Dec 12, 2025", purchaseMethod: "Resale", purchaseTiming: "Day Of", category: "Festival", thoughts: "", favoriteSong: "", funFact: "" },
+      { title: "Andrea Bocelli", youtubeId: "u_ER19jpwxM", image: "https://img.youtube.com/vi/u_ER19jpwxM/hqdefault.jpg", artist: "Andrea Bocelli", venue: "Madison Square Garden", city: "New York, NY", date: "Dec 17, 2025", purchaseMethod: "Resale", purchaseTiming: "Day Of", category: "Classical", thoughts: "", favoriteSong: "", funFact: "" },
       { title: "Dancing With The Stars: Live! — 2026 Tour", youtubeId: "S0O4gO7IXL0", image: "/images/concerts/dancing_with_the_stars_live_2026_tour.png", artist: "Dancing with the Stars", venue: "Radio City Music Hall", city: "New York, NY", date: "Feb 15, 2026", purchaseMethod: "Ticketmaster", purchaseTiming: "Day Of", category: "Dance", thoughts: "Val was a standout.", favoriteSong: "WHERE IS MY HUSBAND!", funFact: "Big recent demographic shift to young Caucasian females (def from TikTok)." },
       { title: "That's Showbiz Baby! The Tour", youtubeId: "1kIIdGV1ubA", image: "/images/concerts/thats_showbiz_baby_the_tour.png", artist: "Jade", venue: "The Fillmore", city: "Philadelphia, PA", date: "Feb 16, 2026", purchaseMethod: "Resale", purchaseTiming: "Planned", category: "Pop", thoughts: "Intimate venue (but low budget). Hoping she gets a breakout hit soon, so underrated!", favoriteSong: "Plastic Box", funFact: "Same day trip from NYC (Amtrak in morning, chilled at Wharton, late evening Peter Pan bus back)." },
       { title: "[This Is For] World Tour", youtubeId: "xeeiFQuzFss", image: "/images/concerts/this_is_for_world_tour.png", artist: "Twice", venue: "UBS Arena", city: "New York, NY", date: "Feb 20, 2026", purchaseMethod: "Resale", purchaseTiming: "Day Of", category: "K-Pop", thoughts: "Nayeon seemed sad, but Jihyo killed it!", favoriteSong: "The Feels", funFact: "Setlist has become my workout playlist for several months." },
@@ -83,21 +100,32 @@
       { title: "Little Miss Drama Tour", youtubeId: "pfMTQIaVPz0", image: "/images/concerts/little_miss_drama_tour.png", artist: "Cardi B", venue: "Madison Square Garden", city: "New York, NY", date: "Mar 26, 2026", purchaseMethod: "Box Office", purchaseTiming: "Week Of", category: "Rap", thoughts: "Gives everything into performance.", favoriteSong: "Be Careful", funFact: "The row we found was pretty empty the entire time." },
     ];
 
+    const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+    const parseDate = d => new Date(d.replace(/\s&\s\d+/, ''));
+    concerts.sort((a, b) => parseDate(b.date) - parseDate(a.date));
+
     document.getElementById('count').textContent = concerts.length + ' videos';
 
     const grid = document.getElementById('concert-grid');
+    let currentYear = null;
     concerts.forEach((c, i) => {
+      const year = parseDate(c.date).getFullYear();
+      if (year !== currentYear) {
+        grid.insertAdjacentHTML('beforeend', `<div class="year-divider"><span>${year}</span></div>`);
+        currentYear = year;
+      }
       grid.insertAdjacentHTML('beforeend', `
         <article class="video-card" data-index="${i}">
           <div class="card-thumb">
-            <img src="${c.image}" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/${c.youtubeId}/hqdefault.jpg'" alt="${c.title}" loading="lazy" />
+            <img src="${c.image}" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/${c.youtubeId}/hqdefault.jpg'" alt="${esc(c.title)}" loading="lazy" />
             <a class="card-yt-link" href="https://www.youtube.com/watch?v=${c.youtubeId}" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube" title="Watch on YouTube">
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8zM9.75 15.5V8.5l6.25 3.5-6.25 3.5z"/></svg>
             </a>
             <div class="card-date">${c.date.replace(/,?\s\d{4}$/, '').toUpperCase()}</div>
             <div class="card-overlay">
-              <p class="card-artist">${c.artist}</p>
-              <p class="card-title">${c.title}</p>
+              <p class="card-artist">${esc(c.artist)}</p>
+              <p class="card-title">${esc(c.title)}</p>
             </div>
           </div>
         </article>
