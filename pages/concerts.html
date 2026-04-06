@@ -41,13 +41,15 @@
       </div>
       <div class="modal-info">
         <p class="modal-title" id="modal-title"></p>
+        <p class="modal-artist-name" id="modal-artist"></p>
+        <p class="modal-venue-name" id="modal-venue"></p>
+        <p class="modal-date-text" id="modal-date"></p>
         <div class="modal-meta">
-          <span id="modal-artist"></span>
+          <span id="modal-category"></span>
           <span class="byline-dot">•</span>
-          <span id="modal-venue"></span>
+          <span id="modal-purchase-method"></span>
           <span class="byline-dot">•</span>
-          <span id="modal-date"></span>
-          <span class="price-tag" id="modal-price"></span>
+          <span id="modal-purchase-timing"></span>
         </div>
       </div>
     </div>
@@ -63,12 +65,12 @@
     document.getElementById('year').textContent = '© ' + new Date().getFullYear();
 
     const concerts = [
-      { title: "Dancing with the Stars: Live! — 2026 Tour", youtubeId: "S0O4gO7IXL0", image: "/images/concerts/dancing_with_the_stars_live_2026_tour.png", artist: "Dancing with the Stars", venue: "Radio City Music Hall", city: "New York, NY", date: "Feb 15, 2026", price: "$189" },
-      { title: "That's Showbiz Baby! The Tour", youtubeId: "1kIIdGV1ubA", image: "/images/concerts/thats_showbiz_baby_the_tour.png", artist: "Jade", venue: "The Fillmore", city: "Philadelphia, PA", date: "Feb 16, 2026", price: "$50" },
-      { title: "[This Is For] World Tour", youtubeId: "xeeiFQuzFss", image: "/images/concerts/this_is_for_world_tour.png", artist: "Twice", venue: "UBS Arena", city: "New York, NY", date: "Feb 20, 2026", price: "$56" },
-      { title: "Wishbone World Tour", youtubeId: "4-VDulM2GVs", image: "/images/concerts/wishbone_world_tour.png", artist: "Conan Gray", venue: "Prudential Center", city: "Newark, NJ", date: "Feb 27, 2026", price: "$136" },
-      { title: "The MAYHEM Ball", youtubeId: "XMfMK5laeNA", image: "/images/concerts/the_mayhem_ball.png", artist: "Lady Gaga", venue: "Madison Square Garden", city: "New York, NY", date: "Mar 18, 2026", price: "$452" },
-      { title: "Little Miss Drama Tour", youtubeId: "pfMTQIaVPz0", image: "/images/concerts/little_miss_drama_tour.png", artist: "Cardi B", venue: "Madison Square Garden", city: "New York, NY", date: "Mar 26, 2026", price: "$80" },
+      { title: "Dancing With The Stars: Live! — 2026 Tour", youtubeId: "S0O4gO7IXL0", image: "/images/concerts/dancing_with_the_stars_live_2026_tour.png", artist: "Dancing with the Stars", venue: "Radio City Music Hall", city: "New York, NY", date: "Feb 15, 2026", purchaseMethod: "Box Office", purchaseTiming: "Day Of", category: "Dance" },
+      { title: "That's Showbiz Baby! The Tour", youtubeId: "1kIIdGV1ubA", image: "/images/concerts/thats_showbiz_baby_the_tour.png", artist: "Jade", venue: "The Fillmore", city: "Philadelphia, PA", date: "Feb 16, 2026", purchaseMethod: "Resale", purchaseTiming: "Planned", category: "Pop" },
+      { title: "[This Is For] World Tour", youtubeId: "xeeiFQuzFss", image: "/images/concerts/this_is_for_world_tour.png", artist: "Twice", venue: "UBS Arena", city: "New York, NY", date: "Feb 20, 2026", purchaseMethod: "Resale", purchaseTiming: "Day Of", category: "K-Pop" },
+      { title: "Wishbone World Tour", youtubeId: "4-VDulM2GVs", image: "/images/concerts/wishbone_world_tour.png", artist: "Conan Gray", venue: "Prudential Center", city: "Newark, NJ", date: "Feb 27, 2026", purchaseMethod: "Ticketmaster", purchaseTiming: "Week Of", category: "Pop" },
+      { title: "The MAYHEM Ball", youtubeId: "XMfMK5laeNA", image: "/images/concerts/the_mayhem_ball.png", artist: "Lady Gaga", venue: "Madison Square Garden", city: "New York, NY", date: "Mar 18, 2026", purchaseMethod: "Ticketmaster", purchaseTiming: "Day Of", category: "Pop" },
+      { title: "Little Miss Drama Tour", youtubeId: "pfMTQIaVPz0", image: "/images/concerts/little_miss_drama_tour.png", artist: "Cardi B", venue: "Madison Square Garden", city: "New York, NY", date: "Mar 26, 2026", purchaseMethod: "Box Office", purchaseTiming: "Week Of", category: "Rap" },
     ];
 
     document.getElementById('count').textContent = concerts.length + ' videos';
@@ -102,7 +104,9 @@
       document.getElementById('modal-artist').textContent = c.artist;
       document.getElementById('modal-venue').textContent = `${c.venue}, ${c.city}`;
       document.getElementById('modal-date').textContent = c.date;
-      document.getElementById('modal-price').textContent = c.price;
+      document.getElementById('modal-category').textContent = c.category;
+      document.getElementById('modal-purchase-method').textContent = c.purchaseMethod;
+      document.getElementById('modal-purchase-timing').textContent = c.purchaseTiming;
       document.getElementById('modal-backdrop').classList.add('open');
       document.body.style.overflow = 'hidden';
     });
