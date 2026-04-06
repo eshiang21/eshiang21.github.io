@@ -384,9 +384,8 @@ main { padding-top: var(--nav-h); }
 
 .modal-artist-name {
   font-size: 0.9rem;
-  font-weight: 400;
-  text-decoration: underline;
-  color: var(--black);
+  font-weight: 700;
+  color: var(--gray2);
   margin: 0 0 0.2rem;
 }
 
@@ -418,7 +417,6 @@ main { padding-top: var(--nav-h); }
 }
 
 .modal-extras {
-  margin-top: 0.75rem;
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
@@ -428,6 +426,7 @@ main { padding-top: var(--nav-h); }
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--gray2);
   margin: 0.5rem 0 0.1rem;
 }
