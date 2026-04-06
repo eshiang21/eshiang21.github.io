@@ -191,8 +191,8 @@ main { padding-top: var(--nav-h); }
   background-repeat: no-repeat;
   background-position: right 0.5rem center;
   border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.35rem 1.75rem 0.35rem 0.65rem;
+  border-radius: 20px;
+  padding: 0.35rem 1.75rem 0.35rem 0.75rem;
   font-size: 0.75rem;
   font-family: var(--sans);
   color: var(--black);
