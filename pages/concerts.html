@@ -35,7 +35,7 @@
         <select class="filter-select" id="filter-category"><option value="">Category</option></select>
         <button class="filter-clear" id="filter-clear">Clear filters</button>
       </div>
-      <div class="video-grid" id="concert-grid"></div>
+      <div class="concert-grid-wrapper" id="concert-grid"></div>
     </section>
   </main>
 
@@ -172,14 +172,22 @@
       const grid = document.getElementById('concert-grid');
       grid.innerHTML = '';
       let currentYear = null;
+      let currentSection = null;
+      let currentInnerGrid = null;
       filtered.forEach(c => {
         const i = concerts.indexOf(c);
         const year = parseDate(c.date).getFullYear();
         if (year !== currentYear) {
-          grid.insertAdjacentHTML('beforeend', `<div class="year-divider"><span>${year}</span></div>`);
+          currentSection = document.createElement('div');
+          currentSection.className = 'year-section';
+          currentSection.innerHTML = `<div class="year-divider"><span>${year}</span></div>`;
+          currentInnerGrid = document.createElement('div');
+          currentInnerGrid.className = 'video-grid';
+          currentSection.appendChild(currentInnerGrid);
+          grid.appendChild(currentSection);
           currentYear = year;
         }
-        grid.insertAdjacentHTML('beforeend', `
+        currentInnerGrid.insertAdjacentHTML('beforeend', `
           <article class="video-card" data-index="${i}">
             <div class="card-thumb">
               <img src="${c.image}" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/${c.youtubeId}/hqdefault.jpg'" alt="${esc(c.title)}" loading="lazy" />

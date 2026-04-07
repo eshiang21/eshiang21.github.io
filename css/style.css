@@ -280,12 +280,20 @@ main { padding-top: var(--nav-h); }
   gap: 1.5rem;
 }
 
+.year-section {
+  margin-bottom: 1rem;
+}
+
 .year-divider {
-  grid-column: 1 / -1;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   margin: 0.5rem 0;
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 10;
+  background: var(--bg);
+  padding: 0.4rem 0;
 }
 
 .year-divider span {
