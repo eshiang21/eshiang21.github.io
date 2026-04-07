@@ -76,23 +76,27 @@ main { padding-top: var(--nav-h); }
   overflow: hidden;
   padding: 5rem 2rem 3rem;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
-  max-width: 1200px;
-  margin: 0 auto;
+  flex: 0 0 auto;
+  max-width: 520px;
 }
 
 .hero-figure {
-  position: absolute;
-  left: 55%;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 60%;
-  width: auto;
+  position: relative;
   z-index: 1;
+  flex: 0 0 auto;
+  height: clamp(180px, 40vh, 320px);
+  width: auto;
   pointer-events: none;
   user-select: none;
 }
@@ -114,14 +118,8 @@ main { padding-top: var(--nav-h); }
   0%, 100% { d: path("M-80,192 C80,192 180,28 400,34 C620,40 550,301 645,301 C780,301 820,66 920,66 C1020,66 1080,181 1160,181 C1240,181 1450,78 1520,84"); }
   50%       { d: path("M-80,192 C80,192 185,24 405,30 C625,36 555,296 648,296 C783,296 824,71 924,71 C1024,71 1084,176 1164,176 C1244,176 1452,83 1520,88"); }
 }
-@keyframes ribbonFloat3 {
-  0%, 100% { d: path("M-80,208 C80,208 180,44 400,50 C620,56 550,315 645,315 C780,315 820,82 920,82 C1020,82 1080,197 1160,197 C1240,197 1450,94 1520,100"); }
-  50%       { d: path("M-80,208 C80,208 185,40 405,46 C625,52 555,310 648,310 C783,310 824,87 924,87 C1024,87 1084,192 1164,192 C1244,192 1452,99 1520,104"); }
-}
-
 .ribbon-1 { animation: ribbonFloat1 6s ease-in-out infinite alternate; }
 .ribbon-2 { animation: ribbonFloat2 9s ease-in-out 1s infinite alternate; }
-.ribbon-3 { animation: ribbonFloat3 13s ease-in-out 0.5s infinite alternate; }
 
 .hero-title {
   font-size: clamp(1.6rem, 3vw, 2.2rem);
@@ -588,6 +586,22 @@ footer {
   nav { padding: 0 1.25rem; }
   .hero, .page-header, .section { padding-left: 1.25rem; padding-right: 1.25rem; }
   .video-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 0;
+    max-width: 100%;
+  }
+
+  .hero-figure {
+    align-self: center;
+    height: auto;
+    width: 40%;
+    max-width: 170px;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+  }
 }
 
 @media (max-width: 500px) {
