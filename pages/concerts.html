@@ -207,6 +207,48 @@
       document.getElementById('count').textContent = hasActive
         ? `${filtered.length} of ${concerts.length} videos`
         : `${concerts.length} videos`;
+      insertFeaturedTiles();
+    }
+
+    const featuredVideos = {
+      '2025': 'braKZFveGKw',
+      '2024': 'TEGlfklP49c',
+    };
+
+    function insertFeaturedTiles() {
+      document.querySelectorAll('.year-section').forEach(section => {
+        const yearDivider = section.querySelector('.year-divider');
+        const yearEl = yearDivider && yearDivider.querySelector('span');
+        if (!yearEl) return;
+        const year = yearEl.textContent.trim();
+        const ytId = featuredVideos[year];
+        if (!ytId) return;
+        const thumb = ytId
+          ? `<img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="Year in Review — ${year}" />`
+          : '';
+        const ytLink = ytId
+          ? `<a class="card-yt-link" href="https://www.youtube.com/watch?v=${ytId}" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube" title="Watch on YouTube">
+               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8zM9.75 15.5V8.5l6.25 3.5-6.25 3.5z"/></svg>
+             </a>`
+          : '';
+
+        const featured = document.createElement('div');
+        featured.className = 'featured-section';
+        featured.innerHTML = `
+          <div class="video-grid">
+            <article class="video-card featured-card" data-year="${year}" data-youtube-id="${ytId || ''}">
+              <div class="card-thumb" style="${ytId ? '' : 'background:#1a1a1a;'}">
+                ${thumb}
+                ${ytLink}
+                <div class="card-overlay">
+                  <p class="card-title">Year in Review — ${year}</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        `;
+        yearDivider.after(featured);
+      });
     }
 
     function updateFilters() {
@@ -224,6 +266,18 @@
       if (e.target.closest('.card-yt-link')) return;
       const card = e.target.closest('.video-card');
       if (!card) return;
+
+      // Featured compilation tile
+      if (card.classList.contains('featured-card')) {
+        const ytId = card.dataset.youtubeId;
+        const year = card.dataset.year;
+        if (!ytId) return;
+        document.getElementById('modal-iframe').src = `https://www.youtube.com/embed/${ytId}?autoplay=1`;
+        document.getElementById('modal-title').textContent = `Year in Review — ${year}`;
+        document.querySelector('.modal-info').dataset.featured = 'true';
+        document.getElementById('modal-backdrop').classList.add('open');
+        return;
+      }
       const c = concerts[card.dataset.index];
       document.getElementById('modal-iframe').src =
         `https://www.youtube.com/embed/${c.youtubeId}?autoplay=1`;
@@ -237,6 +291,7 @@
       document.getElementById('modal-thoughts').textContent = c.thoughts;
       document.getElementById('modal-favorite-song').textContent = c.favoriteSong;
       document.getElementById('modal-fun-fact').textContent = c.funFact;
+      document.querySelector('.modal-info').dataset.featured = '';
       document.getElementById('modal-backdrop').classList.add('open');
       document.body.style.overflow = 'hidden';
     });

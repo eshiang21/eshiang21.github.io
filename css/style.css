@@ -284,6 +284,13 @@ main { padding-top: var(--nav-h); }
   margin-bottom: 1rem;
 }
 
+.featured-section {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem 1rem;
+  margin-bottom: 1.5rem;
+}
+
 .year-divider {
   display: flex;
   align-items: center;
@@ -570,6 +577,14 @@ main { padding-top: var(--nav-h); }
   color: var(--black);
   margin: 0;
 }
+
+/* ── FEATURED MODAL ── */
+.modal-info[data-featured="true"] .modal-artist-name,
+.modal-info[data-featured="true"] .modal-venue-name,
+.modal-info[data-featured="true"] .modal-date-text,
+.modal-info[data-featured="true"] .modal-divider,
+.modal-info[data-featured="true"] .modal-meta,
+.modal-info[data-featured="true"] .modal-extras { display: none; }
 
 /* ── FOOTER ── */
 footer {
