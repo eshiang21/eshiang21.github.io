@@ -11,7 +11,8 @@ document.querySelectorAll('.nav-links a').forEach(a => {
   const ribbons = [
     { el: document.querySelector('.ribbon-1'), strength: 0.6 },
     { el: document.querySelector('.ribbon-2'), strength: 1.0 },
-  ];
+  ].filter(r => r.el);
+  if (!ribbons.length) return;
 
   const basePaths = [
     "M-80,176 C80,176 180,12 400,18 C620,24 550,285 645,285 C780,285 820,50 920,50 C1020,50 1080,165 1160,165 C1240,165 1450,62 1520,68",

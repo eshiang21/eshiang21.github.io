@@ -207,8 +207,21 @@
       document.getElementById('count').textContent = hasActive
         ? `${filtered.length} of ${concerts.length} videos`
         : `${concerts.length} videos`;
-      insertFeaturedTiles();
+      if (!hasActive) {
+        insertFeaturedTiles();
+        requestAnimationFrame(() => requestAnimationFrame(syncFeaturedCard));
+      }
     }
+
+    function syncFeaturedCard() {
+      const card = document.querySelector('.year-section .video-card:not(.featured-card)');
+      if (!card) return;
+      const w = card.getBoundingClientRect().width;
+      document.querySelectorAll('.featured-inner > .video-grid').forEach(g => {
+        g.style.flexBasis = w + 'px';
+      });
+    }
+    window.addEventListener('resize', syncFeaturedCard);
 
     const featuredVideos = {
       '2025': 'braKZFveGKw',
@@ -235,16 +248,33 @@
         const featured = document.createElement('div');
         featured.className = 'featured-section';
         featured.innerHTML = `
-          <div class="video-grid">
-            <article class="video-card featured-card" data-year="${year}" data-youtube-id="${ytId || ''}">
-              <div class="card-thumb" style="${ytId ? '' : 'background:#1a1a1a;'}">
-                ${thumb}
-                ${ytLink}
-                <div class="card-overlay">
-                  <p class="card-title">Year in Review — ${year}</p>
+          <div class="featured-inner">
+            <div class="video-grid">
+              <article class="video-card featured-card" data-year="${year}" data-youtube-id="${ytId || ''}">
+                <div class="card-thumb" style="${ytId ? '' : 'background:#1a1a1a;'}">
+                  ${thumb}
+                  ${ytLink}
+                  <div class="card-overlay">
+                    <p class="card-title">Year in Review — ${year}</p>
+                  </div>
                 </div>
-              </div>
-            </article>
+              </article>
+            </div>
+            <div class="featured-animation">
+              <svg class="featured-waves" viewBox="0 0 800 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                  <clipPath id="cp-w-${year}"><path class="cp-white"/></clipPath>
+                  <clipPath id="cp-g-${year}"><path class="cp-grey"/></clipPath>
+                  <clipPath id="cp-b-${year}"><path class="cp-blue"/></clipPath>
+                </defs>
+                <path class="wave-grey"  fill="#d5d5d5" d="M0,108 C100,98 200,120 400,104 C600,92 700,115 800,106 L800,200 L0,200 Z"/>
+                <path class="wave-blue"  fill="#d6eaf8" d="M0,145 C100,155 200,138 400,150 C600,162 700,140 800,148 L800,200 L0,200 Z"/>
+                <path class="wave-white" fill="#ffffff" d="M0,0 L800,0 L800,65 C700,50 600,75 400,58 C200,42 100,58 0,68 Z"/>
+                <text x="400" y="181" font-size="230" font-weight="900" font-family="Inter,system-ui,sans-serif" text-anchor="middle" letter-spacing="-4" clip-path="url(#cp-w-${year})" fill="#d5d5d5">${year}</text>
+                <text x="400" y="181" font-size="230" font-weight="900" font-family="Inter,system-ui,sans-serif" text-anchor="middle" letter-spacing="-4" clip-path="url(#cp-g-${year})" fill="#d6eaf8">${year}</text>
+                <text x="400" y="181" font-size="230" font-weight="900" font-family="Inter,system-ui,sans-serif" text-anchor="middle" letter-spacing="-4" clip-path="url(#cp-b-${year})" fill="#ffffff">${year}</text>
+              </svg>
+            </div>
           </div>
         `;
         yearDivider.after(featured);
@@ -261,6 +291,74 @@
     }
 
     renderGrid(concerts);
+
+    // ── Featured animation: morphing landscape waves ──
+    (function () {
+      // White: bottom edge of the white top-fill region (fills y=0 down to curve)
+      const whiteA = [ 68,  58,  42,  58,  75,  50,  65];
+      const whiteB = [ 78,  70,  54,  68,  85,  62,  75];
+
+      // Grey: peaks at left-center (x=200), troughs at right-center (x=600)
+      // Worst-case max Y across both keyframes = 128 (greyB max)
+      const greyA  = [108,  98, 120, 104,  92, 115, 106];
+      const greyB  = [118, 110, 128, 114, 102, 124, 116];
+
+      // Blue: troughs at left-center (x=200), peaks at right-center (x=600) — opposite profile to grey
+      // Worst-case min Y across both keyframes = 138 (blueA min); gap vs grey = 138-128 = 10px
+      const blueA  = [145, 155, 138, 150, 162, 140, 148];
+      const blueB  = [155, 162, 148, 158, 170, 150, 158];
+
+      // White fills from y=0 down to curve (reversed bezier, top edge always flush)
+      function buildWhitePath(y) {
+        return `M0,0 L800,0 L800,${y[6]} C700,${y[5]} 600,${y[4]} 400,${y[3]} C200,${y[2]} 100,${y[1]} 0,${y[0]} Z`;
+      }
+
+      // Grey and blue fill from their curve down to y=200
+      function buildPath(y) {
+        return `M0,${y[0]} C100,${y[1]} 200,${y[2]} 400,${y[3]} C600,${y[4]} 700,${y[5]} 800,${y[6]} L800,200 L0,200 Z`;
+      }
+
+      // Band between white wave bottom and blue wave top (the grey visual region)
+      function buildGreyClip(wY, bY) {
+        return `M0,${wY[0]} C100,${wY[1]} 200,${wY[2]} 400,${wY[3]} C600,${wY[4]} 700,${wY[5]} 800,${wY[6]} L800,${bY[6]} C700,${bY[5]} 600,${bY[4]} 400,${bY[3]} C200,${bY[2]} 100,${bY[1]} 0,${bY[0]} Z`;
+      }
+
+      function lerpArr(a, b, t) {
+        return a.map((v, i) => v + (b[i] - v) * t);
+      }
+
+      function ease(t) {
+        return (1 - Math.cos(t * Math.PI)) / 2;
+      }
+
+      function pingpong(ts, ms) {
+        const t = (ts % ms) / ms;
+        return t < 0.5 ? ease(t * 2) : ease((1 - t) * 2);
+      }
+
+      function tick(ts) {
+        const wY = lerpArr(whiteA, whiteB, pingpong(ts, 6000));
+        const gY = lerpArr(greyA,  greyB,  pingpong(ts, 9000));
+        const bY = lerpArr(blueA,  blueB,  pingpong(ts, 7500));
+
+        const whiteD    = buildWhitePath(wY);
+        const greyD     = buildPath(gY);
+        const blueD     = buildPath(bY);
+        const greyClipD = buildGreyClip(wY, bY);
+
+        document.querySelectorAll('.featured-waves').forEach(svg => {
+          svg.querySelector('.wave-white')?.setAttribute('d', whiteD);
+          svg.querySelector('.wave-grey')?.setAttribute('d', greyD);
+          svg.querySelector('.wave-blue')?.setAttribute('d', blueD);
+          svg.querySelector('.cp-white')?.setAttribute('d', whiteD);
+          svg.querySelector('.cp-grey')?.setAttribute('d', greyClipD);
+          svg.querySelector('.cp-blue')?.setAttribute('d', blueD);
+        });
+
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
 
     document.getElementById('concert-grid').addEventListener('click', e => {
       if (e.target.closest('.card-yt-link')) return;
